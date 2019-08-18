@@ -6,7 +6,9 @@
         <el-tab-pane label="Table" name="/table"></el-tab-pane>
       </el-tabs>
     </div>
-    <router-view />
+    <div class="content-view">
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
@@ -28,10 +30,13 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
+  background: #fafafa;
 }
 #nav {
+  padding: 30px;
+}
+.content-view {
   padding: 30px;
 }
 </style>
