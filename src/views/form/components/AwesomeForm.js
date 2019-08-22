@@ -37,7 +37,6 @@ export default {
   methods: {
     renderForm(h) {
       const { labelWidth, columns, rules } = this.options
-      console.log(this.formData)
       return h(
         'el-form',
         {
@@ -71,20 +70,20 @@ export default {
       )
     },
     renderFormItem(h, key, column) {
-      const { label, placeholder } = column
-      let colspan = {
-        span: 8,
-        xs: 24, //<768px 响应式栅格数或者栅格属性对象
-        sm: 12, //≥768px 响应式栅格数或者栅格属性对象
-        md: 8, //≥992px 响应式栅格数或者栅格属性对象
-        lg: 8, //≥1200px 响应式栅格数或者栅格属性对象
-        xl: 8 //≥1920px 响应式栅格数或者栅格属性对象
-      }
+      const { label, placeholder, colspan } = column
+      // let colspan = {
+      //   span: 8,
+      //   xs: 24, //<768px 响应式栅格数或者栅格属性对象
+      //   sm: 12, //≥768px 响应式栅格数或者栅格属性对象
+      //   md: 8, //≥992px 响应式栅格数或者栅格属性对象
+      //   lg: 8, //≥1200px 响应式栅格数或者栅格属性对象
+      //   xl: 8 //≥1920px 响应式栅格数或者栅格属性对象
+      // }
       return h(
         'el-col',
         {
           props: {
-            ...colspan
+            span: colspan
           }
         },
         [

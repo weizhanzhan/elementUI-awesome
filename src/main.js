@@ -20,7 +20,8 @@ import {
   Switch,
   Select,
   Option,
-  OptionGroup
+  OptionGroup,
+  Slider
 } from 'element-ui'
 
 const components = [
@@ -42,7 +43,8 @@ const components = [
   Switch,
   Select,
   Option,
-  OptionGroup
+  OptionGroup,
+  Slider
 ]
 Vue.config.productionTip = false
 components.forEach(component => {
