@@ -31,12 +31,8 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
-  background: #fafafa;
 }
 #nav {
-  padding: 30px;
-}
-.content-view {
-  padding: 30px;
+  padding: 0 30px;
 }
 </style>

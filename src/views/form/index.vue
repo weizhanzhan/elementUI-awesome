@@ -1,24 +1,27 @@
 <template>
   <div class="home">
-    <div class="filter">
-      <el-form>
-        <el-row>
-          <el-col :span="8">
-            <el-form-item :label="'colspan:' + colspan">
-              <el-slider
-                style="width:80%;float:right"
-                v-model="colspan"
-                :min="0"
-                :max="24"
-              ></el-slider>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </el-form>
-    </div>
-    <div class="awesome">
-      <AwesomeForm :options="options" :form-data.sync="formData" />
-    </div>
+    <el-row style="padding-left:30px">
+      <el-col :span="18">
+        <div class="awesome">
+          <AwesomeForm
+            :options="options"
+            :form-data.sync="formData"
+            class="awesome-form-view"
+          />
+        </div>
+      </el-col>
+      <el-col :span="6" class="right-tool">
+        <el-form label-width="100px">
+          <el-form-item label="开启栅格">
+            <el-switch v-model="tool.tiggerLayout"></el-switch>
+          </el-form-item>
+
+          <el-form-item :label="'colspan:' + tool.colspan">
+            <el-slider v-model="tool.colspan" :min="0" :max="24"></el-slider>
+          </el-form-item>
+        </el-form>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -31,7 +34,10 @@ export default {
   },
   data() {
     return {
-      colspan: 8,
+      tool: {
+        tiggerLayout: false,
+        colspan: 8
+      },
       options: {
         labelWidth: 100,
         rules: {
@@ -76,7 +82,7 @@ export default {
     }
   },
   watch: {
-    colspan(val) {
+    'tool.colspan'(val) {
       Object.keys(this.options.columns).forEach(key => {
         this.options.columns[key].colspan = val
       })
@@ -94,6 +100,16 @@ export default {
   border-bottom: 1px solid #eeeeee;
 }
 .awesome {
-  padding-top: 24px;
+  padding-right: 24px;
+}
+.awesome-form-view {
+  box-shadow: 0px 2px 5px #e4e4e4;
+  padding: 10px;
+}
+.right-tool {
+  border-left: 1px solid #eeeeee;
+  min-height: 90vh;
+  padding: 10px;
+  box-shadow: 0px 2px 5px #e4e4e4;
 }
 </style>
