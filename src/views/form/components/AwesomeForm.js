@@ -23,6 +23,10 @@ export default {
     size: {
       type: String,
       default: 'small'
+    },
+    inline: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -31,12 +35,12 @@ export default {
     }
   },
   render(h) {
-    console.log(this.formData)
     return this.renderForm(h)
   },
   methods: {
     renderForm(h) {
-      const { labelWidth, columns, rules } = this.options
+      const { labelWidth, columns, rules, grid } = this.options
+      console.log(grid)
       return h(
         'el-form',
         {
@@ -44,30 +48,46 @@ export default {
             labelWidth: `${labelWidth || 80}px`,
             size: this.size,
             rules,
-            model: this.formData
+            model: this.formData,
+            inline: true
           },
           ref: 'form'
         },
         [
-          h('el-row', {}, [
-            ...Object.keys(columns).map(key => {
-              return this.renderFormItem(h, key, columns[key])
-            })
-          ]),
-          h(
-            'el-button',
-            {
-              props: {
-                size: this.size
-              },
-              on: {
-                click: this.submitForm
-              }
-            },
-            'test'
-          )
+          grid
+            ? this.renderGridForm(h, columns)
+            : this.renderNormalForm(h, columns)
+          // h(
+          //   'el-button',
+          //   {
+          //     props: {
+          //       size: this.size
+          //     },
+          //     on: {
+          //       click: this.submitForm
+          //     }
+          //   },
+          //   'test'
+          // )
         ]
       )
+    },
+    renderNormalForm(h, columns) {
+      const form = [
+        ...Object.keys(columns).map(key => {
+          const column = columns[key]
+          const { label, placeholder } = column
+          return this.renderNormalFormItem(h, key, label, placeholder)
+        })
+      ]
+      return form
+    },
+    renderGridForm(h, columns) {
+      return h('el-row', {}, [
+        ...Object.keys(columns).map(key => {
+          return this.renderFormItem(h, key, columns[key])
+        })
+      ])
     },
     renderFormItem(h, key, column) {
       const { label, placeholder, colspan } = column
@@ -86,33 +106,34 @@ export default {
             span: colspan
           }
         },
+        [this.renderNormalFormItem(h, key, label, placeholder)]
+      )
+    },
+    renderNormalFormItem(h, key, label, placeholder) {
+      return h(
+        'el-form-item',
+        {
+          props: {
+            label,
+            prop: key
+          }
+        },
         [
-          h(
-            'el-form-item',
-            {
-              props: {
-                label,
-                prop: key
-              }
+          h('el-input', {
+            attrs: {
+              placeholder
             },
-            [
-              h('el-input', {
-                attrs: {
-                  placeholder
-                },
-                props: {
-                  value: this.formData[key]
-                },
-                on: {
-                  input: event => {
-                    const formData = JSON.parse(JSON.stringify(this.formData))
-                    formData[key] = event
-                    this.$emit('update:formData', formData)
-                  }
-                }
-              })
-            ]
-          )
+            props: {
+              value: this.formData[key]
+            },
+            on: {
+              input: event => {
+                const formData = JSON.parse(JSON.stringify(this.formData))
+                formData[key] = event
+                this.$emit('update:formData', formData)
+              }
+            }
+          })
         ]
       )
     },

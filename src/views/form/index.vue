@@ -6,6 +6,7 @@
           <AwesomeForm
             :options="options"
             :form-data.sync="formData"
+            :inline="true"
             class="awesome-form-view"
           />
         </div>
@@ -13,7 +14,7 @@
       <el-col :span="6" class="right-tool">
         <el-form label-width="100px">
           <el-form-item label="开启栅格">
-            <el-switch v-model="tool.tiggerLayout"></el-switch>
+            <el-switch v-model="tool.tiggerGrid"></el-switch>
           </el-form-item>
 
           <el-form-item :label="'colspan:' + tool.colspan">
@@ -35,11 +36,12 @@ export default {
   data() {
     return {
       tool: {
-        tiggerLayout: false,
+        tiggerGrid: false,
         colspan: 8
       },
       options: {
         labelWidth: 100,
+        grid: false,
         rules: {
           name: [
             { required: true, message: '请输入活动名称', trigger: 'blur' }
